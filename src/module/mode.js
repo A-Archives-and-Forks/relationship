@@ -18,11 +18,10 @@ export function getModeData(sign) {
     $mode = new Map($map);
     if (sign && modeHash[sign]) {
         const mode = modeHash[sign];
-        for (const key in mode) {
-            const modeValue = mode[key];
+        mode.forEach((modeValue, key) => {
             const originalValue = $map.get(key) || [];
             $mode.set(key, [...modeValue, ...originalValue]);
-        }
+        });
     }
     return $mode;
 };
