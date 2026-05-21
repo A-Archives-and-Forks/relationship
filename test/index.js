@@ -66,6 +66,13 @@ test('[age]', function (t) {
     t.deepEqual(relationship({text:'二舅妈',target:'大舅',type:'pair'}),['伯媳']);
     t.end();
 });
+test('[optimal]', function (t) {
+    t.deepEqual(relationship({text:'爸爸',target:'父母',optimal:true}),['自己','老公']);
+    t.deepEqual(relationship({text:'儿子',target:'子女',optimal:true}),['自己','哥哥','弟弟']);
+    t.deepEqual(relationship({text:'爸爸',target:'祖父母',optimal:true}),['儿子']);
+    t.deepEqual(relationship({text:'姑姑',target:'叔叔',optimal:true}),['姐姐','妹妹']);
+    t.end();
+});
 test('[expression]', function (t) {
     t.deepEqual(relationship('外婆和奶奶之间是什么关系？'),['儿女亲家']);
     t.deepEqual(relationship('妈妈应该如何称呼姑姑'),['姑子']);

@@ -188,35 +188,38 @@ export function mergeSelector(param) {
     const result = [];
     from_ids.forEach(from => {
         to_ids.forEach(to => {
+            let currentFrom = from;
+            let currentTo = to;
+            let currentSex = my_sex;
             let sex = my_sex;
-            let selector = ',' + to;
+            let selector = ',' + currentTo;
             if (selector.match(/,([fhs1](&[ol\d]+)?|[olx]b)(&[ol\d]+)?$/)) {
                 sex = 1;
             }
             if (selector.match(/,([mwd0](&[ol\d]+)?|[olx]s)(&[ol\d]+)?$/)) {
                 sex = 0;
             }
-            if (from && to) {
+            if (currentFrom && currentTo) {
                 let isOptimal = param.optimal;
-                if (from.match(/&\d+/) || to.match(/&\d+/)) {
+                if (currentFrom.match(/&\d+/) || currentTo.match(/&\d+/)) {
                     isOptimal = true;
                 }
                 if (isOptimal) {
                     ({
-                        from,
-                        to,
-                        sex: my_sex
+                        from: currentFrom,
+                        to: currentTo,
+                        sex: currentSex
                     } = getOptimal({
-                        from,
-                        to,
-                        sex: my_sex,
+                        from: currentFrom,
+                        to: currentTo,
+                        sex: currentSex,
                         optimal: param.optimal
                     }));
                 }
             }
-            let to_rids = to ? reverseId(to, my_sex) : [''];
+            let to_rids = currentTo ? reverseId(currentTo, currentSex) : [''];
             to_rids.forEach(function (to_r) {
-                let selector = (to_r ? ',' + to_r : '') + (from ? ',' + from : '');
+                let selector = (to_r ? ',' + to_r : '') + (currentFrom ? ',' + currentFrom : '');
                 result.push({
                     selector,
                     sex
