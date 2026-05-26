@@ -29,7 +29,7 @@ const commonPlugins = [
     })
 ];
 
- export default [{
+export default [{
     input: './src/relationship.js',
     output:[{
         file: pkg.main,
